@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import router from './routes/users.js'
+import router from './routes/profile.js'
 // import blog from './routes/blog.js'
 import dotEnv from 'dotenv'
 import mongoose from 'mongoose'
@@ -18,6 +19,7 @@ mongoose.connect(process.env.MONGODB_URL)
 
 // Endpoints
 app.use('/users', router)
+app.use('/profile', router)
 // app.use('/blogs', blog)
 
 
