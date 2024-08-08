@@ -5,7 +5,7 @@ import Home from './page/home'
 import CreateUser from './page/create'
 import CreateProduct from './page/create/CreateProducts'
 import Profile from './page/profile'
-// import Login from './page/auth/Login'
+import Login from './page/auth/Login'
 
 const App = () => {
   return (

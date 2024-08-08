@@ -1,72 +1,79 @@
-import mongoose from "mongoose";
 import Joi from "joi";
+import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
-    fname: {
-        type: String,
-        required: true
+const userSchema = new mongoose.Schema(
+    {
+        fname: {
+            type: String,
+            required: true,
+        },
+        lname: {
+            type: String,
+            required: false,
+            default: "",
+        },
+        username: {
+            type: String,
+            required: true,
+        },
+        password: {
+            type: String,
+            required: true,
+        },
+        age: {
+            type: Number,
+            required: false,
+            default: 0,
+        },
+        url: {
+            type: Array,
+            required: false,
+            default: "",
+        },
+        gender: {
+            type: String,
+            default: "male",
+        },
+        isActive: {
+            type: Boolean,
+            required: false,
+            default: true,
+        },
+        email: {
+            type: String,
+            required: true,
+        },
+        budget: {
+            type: Number,
+            required: true,
+        },
+        role: {
+            type: String,
+            required: true,
+            enum: ["user", "admin", "owner"],
+            default: "user",
+        },
     },
-    lname: {
-        type: String,
-        required: false,
-        default: ""
-    },
-    username: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    age: {
-        type: Number,
-        required: false,
-        default: 0
-    },
-    url: {
-        type: Array,
-        required: false,
-        default: ""
-    },
-    gender: {
-        type: String,
-    },
-    isActive: {
-        type: Boolean,
-        default: true
-    },
-    email: {
-        type: String,
-        required: false,
-        default: ""
-    },
-    budget: {
-        type: Number,
-        required: true
-    },
-    role: {
-        type: String,
-        required: false,
-        default: "user"
-    },
-})
-export const User = mongoose.model('newproject-users', userSchema)
+    {
+        timestamps: true,
+    }
+);
 
-export const validationUsers = (body) => {
-    let schema = Joi.object({
+export const User = mongoose.model("newproject-users", userSchema);
+
+export const validateUser = (body) => {
+    const schema = Joi.object({
         fname: Joi.string().required(),
-        lname: Joi.string().optional(""),
-        username: Joi.string().min(3).max(18).required(),
-        password: Joi.string().min(8).max(16).required(),
-        age: Joi.number().optional(),
-        url: Joi.array().optional(),
-        gender: Joi.string(),
-        isActive: Joi.boolean(),
-        email: Joi.string(),
+        lname: Joi.string().allow(""),
+        username: Joi.string().required(),
+        password: Joi.string().required(),
+        age: Joi.number().allow(0),
+        url: Joi.array().allow(""),
+        gender: Joi.string().allow(""),
+        isActive: Joi.boolean().allow(true),
+        email: Joi.string().required(),
         budget: Joi.number().required(),
-        role: Joi.string().optional(),
-    })
-
-    return schema.validate(body)
-} 
+        role: Joi.string().valid("user", "admin", "owner").allow("user"),
+    });
+    return schema.validate(body);
+};

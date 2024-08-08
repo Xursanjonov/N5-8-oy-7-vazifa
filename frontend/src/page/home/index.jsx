@@ -11,11 +11,7 @@ const Home = () => {
     const [page, setPage] = useState(1)
     const { data, isFetching } = useGetUsersQuery({ limit: 10, skip: page - 1 })
     const [users, setUsers] = useState(data)
-    // const fetchData = (api) => {
-    //     fetch(`${api}/users?limit=${10}&skip=${page - 1}`).then(res => res.json())
-    //         .then(data => setUsers(data))
-    //         .catch(er => console.error(er))
-    // }
+    
     const lengthPage = React.useMemo(() => (Math.ceil(users?.total / 10)))
     const handleChange = (_, value) => {
         console.log(value)
